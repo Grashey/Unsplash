@@ -10,7 +10,10 @@ import UIKit
 enum SearchFactory {
     
    static func build() -> UIViewController {
-        let controller = SearchController()
-        return controller
+       let controller = SearchController()
+       let presenter = SearchPresenter()
+       controller.presenter = presenter
+       presenter.viewController = controller
+       return controller
     }
 }
