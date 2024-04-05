@@ -29,6 +29,10 @@ final class PhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
+    
     private func addSubviews() {
         contentView.addSubview(imageView)
     }

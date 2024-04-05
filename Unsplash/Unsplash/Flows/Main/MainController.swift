@@ -11,6 +11,7 @@ final class MainController: SearchBarController {
     
     var presenter: iMainPresenter?
     
+    private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let inset: CGFloat = 16
     
@@ -24,6 +25,9 @@ final class MainController: SearchBarController {
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         setupCollectionView()
         presenter?.fetchData()
@@ -44,6 +48,13 @@ final class MainController: SearchBarController {
     func reloadView() {
         collectionView.reloadData()
     }
+    
+    @objc private func refresh() {
+        presenter?.refresh()
+        presenter?.fetchData()
+        refreshControl.endRefreshing()
+    }
+
 }
 
 extension MainController: UISearchBarDelegate {
@@ -99,6 +110,13 @@ extension MainController: UICollectionViewDelegate {
             onDetail?(detailInput)
         }
         dismissKeyboard()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let count = presenter?.viewModels.count else { return }
+        if indexPath.item == count - 3 {
+            presenter?.fetchData()
+        }
     }
 }
 
