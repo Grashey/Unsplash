@@ -11,6 +11,8 @@ final class MainCoordinator: iCoordinator {
     
     private var navigation: UINavigationController?
     private let assembly: iAssembly
+    
+    private lazy var detailCoordinator = DetailCoordinator(navigation: navigation, assembly: assembly)
 
     init(navigation: UINavigationController?, assembly: iAssembly = Assembly()) {
         self.navigation = navigation
@@ -18,7 +20,11 @@ final class MainCoordinator: iCoordinator {
     }
     
     func start() {
-        guard let controller = assembly.build(.search) as? MainController else { return }
+        guard let controller = assembly.build(.main) as? MainController else { return }
         navigation?.viewControllers = [controller]
+        
+        controller.onDetail = { [unowned self] input in
+            self.detailCoordinator.start(input)
+        }
     }
 }

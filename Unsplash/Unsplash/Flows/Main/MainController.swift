@@ -14,6 +14,8 @@ final class MainController: SearchBarController {
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let inset: CGFloat = 16
     
+    var onDetail: ((DetailInput) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,6 +95,9 @@ extension MainController: UICollectionViewDataSource {
 extension MainController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let detailInput = presenter?.prepareDetailInputFor(indexPath.item) {
+            onDetail?(detailInput)
+        }
         dismissKeyboard()
     }
 }

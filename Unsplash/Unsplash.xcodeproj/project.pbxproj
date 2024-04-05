@@ -26,6 +26,12 @@
 		4A0B0B4E2BBF345300389CFB /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B4D2BBF345300389CFB /* MainPresenter.swift */; };
 		4A0B0B512BBF3B9500389CFB /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B502BBF3B9500389CFB /* MainViewModel.swift */; };
 		4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B522BBF416900389CFB /* PhotoCell.swift */; };
+		4A7DCE512BBFF1C8002E0BA0 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE502BBFF1C8002E0BA0 /* DetailController.swift */; };
+		4A7DCE532BBFF1EF002E0BA0 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE522BBFF1EF002E0BA0 /* DetailPresenter.swift */; };
+		4A7DCE552BBFF23B002E0BA0 /* DetailFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE542BBFF23B002E0BA0 /* DetailFactory.swift */; };
+		4A7DCE572BBFF2B4002E0BA0 /* DetailInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE562BBFF2B4002E0BA0 /* DetailInput.swift */; };
+		4A7DCE5A2BBFF5DF002E0BA0 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE592BBFF5DF002E0BA0 /* DetailCoordinator.swift */; };
+		4A7DCE5D2BBFFCB5002E0BA0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +56,12 @@
 		4A0B0B4D2BBF345300389CFB /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		4A0B0B502BBF3B9500389CFB /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4A0B0B522BBF416900389CFB /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		4A7DCE502BBFF1C8002E0BA0 /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		4A7DCE522BBFF1EF002E0BA0 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		4A7DCE542BBFF23B002E0BA0 /* DetailFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFactory.swift; sourceTree = "<group>"; };
+		4A7DCE562BBFF2B4002E0BA0 /* DetailInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInput.swift; sourceTree = "<group>"; };
+		4A7DCE592BBFF5DF002E0BA0 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
+		4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				4A0B0B392BBF04F700389CFB /* Main */,
+				4A7DCE4F2BBFF1AB002E0BA0 /* Detail */,
 				4A0B0B312BBF00D900389CFB /* TabBar */,
 			);
 			path = Flows;
@@ -194,6 +207,43 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4A7DCE4F2BBFF1AB002E0BA0 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE5B2BBFFC56002E0BA0 /* Navigation */,
+				4A7DCE582BBFF579002E0BA0 /* Factory */,
+				4A7DCE5E2BBFFCBD002E0BA0 /* View */,
+				4A7DCE502BBFF1C8002E0BA0 /* DetailController.swift */,
+				4A7DCE522BBFF1EF002E0BA0 /* DetailPresenter.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		4A7DCE582BBFF579002E0BA0 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE542BBFF23B002E0BA0 /* DetailFactory.swift */,
+				4A7DCE562BBFF2B4002E0BA0 /* DetailInput.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		4A7DCE5B2BBFFC56002E0BA0 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE592BBFF5DF002E0BA0 /* DetailCoordinator.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4A7DCE5E2BBFFCBD002E0BA0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -267,19 +317,25 @@
 				4A0B0B302BBF007D00389CFB /* RootCoordinator.swift in Sources */,
 				4A0B0B462BBF072900389CFB /* MainFactory.swift in Sources */,
 				4A0B0B512BBF3B9500389CFB /* MainViewModel.swift in Sources */,
+				4A7DCE5A2BBFF5DF002E0BA0 /* DetailCoordinator.swift in Sources */,
 				4A0B0B4E2BBF345300389CFB /* MainPresenter.swift in Sources */,
 				4A0B0B4A2BBF2FE700389CFB /* SearchBarController.swift in Sources */,
+				4A7DCE552BBFF23B002E0BA0 /* DetailFactory.swift in Sources */,
 				4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */,
 				4A0B0B442BBF06D600389CFB /* ModuleName.swift in Sources */,
 				4A0B0B192BBEF6E400389CFB /* AppDelegate.swift in Sources */,
 				4A0B0B332BBF00F400389CFB /* TabBarCoordinator.swift in Sources */,
 				4A0B0B3B2BBF050800389CFB /* MainController.swift in Sources */,
+				4A7DCE532BBFF1EF002E0BA0 /* DetailPresenter.swift in Sources */,
 				4A0B0B402BBF064E00389CFB /* Assembly.swift in Sources */,
 				4A0B0B3D2BBF051500389CFB /* MainCoordinator.swift in Sources */,
+				4A7DCE572BBFF2B4002E0BA0 /* DetailInput.swift in Sources */,
 				4A0B0B422BBF06B800389CFB /* ModuleInput.swift in Sources */,
+				4A7DCE5D2BBFFCB5002E0BA0 /* DetailView.swift in Sources */,
 				4A0B0B352BBF028400389CFB /* TabBarController.swift in Sources */,
 				4A0B0B372BBF030300389CFB /* Constant.swift in Sources */,
 				4A0B0B4C2BBF331900389CFB /* MainString.swift in Sources */,
+				4A7DCE512BBFF1C8002E0BA0 /* DetailController.swift in Sources */,
 				4A0B0B1B2BBEF6E400389CFB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,7 +8,13 @@
 import UIKit
 
 protocol iCoordinator {
-    func start()
+    func start(_ moduleInput: ModuleInput?)
+}
+
+extension iCoordinator {
+    func start(_ moduleInput: ModuleInput? = nil) {
+        start(moduleInput)
+    }
 }
 
 final class RootCoordinator: iCoordinator {

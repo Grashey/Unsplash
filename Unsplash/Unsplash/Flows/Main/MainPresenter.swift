@@ -13,14 +13,13 @@ protocol iMainPresenter {
     
     func clearSearch()
     func findImagesWith(_ text: String)
-    
     func fetchData()
+    func prepareDetailInputFor(_ index: Int) -> DetailInput
 }
 
 final class MainPresenter: iMainPresenter {
     
     weak var viewController: MainController?
-    
     var viewModels: [MainViewModel] = []
     
     func clearSearch() {
@@ -40,9 +39,12 @@ final class MainPresenter: iMainPresenter {
             let model = MainViewModel(image: image)
             viewModels.append(model)
         }
-        
         viewController?.reloadView()
     }
     
+    func prepareDetailInputFor(_ index: Int) -> DetailInput {
+        let image = viewModels[index].image
+        return DetailInput(image: image)
+    }
     
 }

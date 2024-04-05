@@ -9,4 +9,5 @@ import Foundation
 
 enum ModuleName {
     case main
+    case detail
 }
