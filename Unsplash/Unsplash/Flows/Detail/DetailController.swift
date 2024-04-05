@@ -49,7 +49,7 @@ final class DetailController: UIViewController {
             if isFavorite {
                 favoriteButton.setImage(UIImage(named: DetailString.Image.like), for: .normal)
             } else {
-                favoriteButton.setImage(UIImage(named: DetailString.Image.unlike)?.withTintColor(.black), for: .normal)
+                favoriteButton.setImage(UIImage(named: DetailString.Image.unlike)?.withTintColor(.customButtonTint), for: .normal)
             }
         }
     }
