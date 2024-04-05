@@ -28,8 +28,9 @@ final class DetailController: UIViewController {
         
         title = "Detail"
         makeFavoritesButton()
-        let image = presenter?.makeModel()
-        detailView.configureWith(image: image)
+        if let model = presenter?.makeModel() {
+            detailView.configureWith(model: model)
+        }
     }
     
     private func makeFavoritesButton() {

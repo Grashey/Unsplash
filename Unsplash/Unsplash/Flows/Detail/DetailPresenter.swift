@@ -8,7 +8,7 @@
 import UIKit
 
 protocol iDetailPresenter {
-    func makeModel() -> UIImage?
+    func makeModel() -> DetailViewModel
     func operateFavorites()
     func checkIsFavorite() -> Bool
 }
@@ -17,7 +17,7 @@ final class DetailPresenter: iDetailPresenter {
     
     weak var viewController: DetailController?
     
-    private let image: UIImage?
+    private let model: DetailViewModel
     private var isFavorite: Bool = false {
         didSet {
             guard oldValue != isFavorite else { return }
@@ -25,12 +25,18 @@ final class DetailPresenter: iDetailPresenter {
         }
     }
     
+    private let formatter: DateFormatter = {
+        $0.dateFormat = "dd.MM.yyyy"
+        return $0
+    }(DateFormatter())
+    
     init(image: UIImage?) {
-        self.image = image
+        let date = Date()
+        self.model = DetailViewModel(image: image, author: "Vincent van Gogh", date: formatter.string(from: date))
     }
     
-    func makeModel() -> UIImage? {
-        image
+    func makeModel() -> DetailViewModel {
+        model
     }
     
     func operateFavorites() {
