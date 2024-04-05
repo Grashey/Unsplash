@@ -24,6 +24,8 @@
 		4A0B0B4A2BBF2FE700389CFB /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B492BBF2FE700389CFB /* SearchBarController.swift */; };
 		4A0B0B4C2BBF331900389CFB /* SearchString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B4B2BBF331900389CFB /* SearchString.swift */; };
 		4A0B0B4E2BBF345300389CFB /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B4D2BBF345300389CFB /* SearchPresenter.swift */; };
+		4A0B0B512BBF3B9500389CFB /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B502BBF3B9500389CFB /* SearchViewModel.swift */; };
+		4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0B0B522BBF416900389CFB /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		4A0B0B492BBF2FE700389CFB /* SearchBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarController.swift; sourceTree = "<group>"; };
 		4A0B0B4B2BBF331900389CFB /* SearchString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchString.swift; sourceTree = "<group>"; };
 		4A0B0B4D2BBF345300389CFB /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		4A0B0B502BBF3B9500389CFB /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		4A0B0B522BBF416900389CFB /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 		4A0B0B2D2BBEFFEF00389CFB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4A0B0B492BBF2FE700389CFB /* SearchBarController.swift */,
+				4A0B0B522BBF416900389CFB /* PhotoCell.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -137,9 +143,9 @@
 			children = (
 				4A0B0B3E2BBF051B00389CFB /* Navigation */,
 				4A0B0B472BBF07FC00389CFB /* Factory */,
+				4A0B0B542BBF55CF00389CFB /* Model */,
 				4A0B0B3A2BBF050800389CFB /* SearchController.swift */,
 				4A0B0B4D2BBF345300389CFB /* SearchPresenter.swift */,
-				4A0B0B492BBF2FE700389CFB /* SearchBarController.swift */,
 				4A0B0B4F2BBF370700389CFB /* Misc */,
 			);
 			path = Search;
@@ -178,6 +184,14 @@
 				4A0B0B4B2BBF331900389CFB /* SearchString.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		4A0B0B542BBF55CF00389CFB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A0B0B502BBF3B9500389CFB /* SearchViewModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,8 +266,10 @@
 			files = (
 				4A0B0B302BBF007D00389CFB /* RootCoordinator.swift in Sources */,
 				4A0B0B462BBF072900389CFB /* SearchFactory.swift in Sources */,
+				4A0B0B512BBF3B9500389CFB /* SearchViewModel.swift in Sources */,
 				4A0B0B4E2BBF345300389CFB /* SearchPresenter.swift in Sources */,
 				4A0B0B4A2BBF2FE700389CFB /* SearchBarController.swift in Sources */,
+				4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */,
 				4A0B0B442BBF06D600389CFB /* ModuleName.swift in Sources */,
 				4A0B0B192BBEF6E400389CFB /* AppDelegate.swift in Sources */,
 				4A0B0B332BBF00F400389CFB /* TabBarCoordinator.swift in Sources */,

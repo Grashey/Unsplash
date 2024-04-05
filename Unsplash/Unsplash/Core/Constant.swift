@@ -10,7 +10,7 @@ import Foundation
 enum Constant {
     
     enum FlowTitle {
-        static let search = "Поиск"
+        static let search = "Search"
     }
     
     
