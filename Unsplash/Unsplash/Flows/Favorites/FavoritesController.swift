@@ -1,19 +1,19 @@
 //
-//  MainController.swift
+//  FavoritesController.swift
 //  Unsplash
 //
-//  Created by Aleksandr Fetisov on 04.04.2024.
+//  Created by Aleksandr Fetisov on 05.04.2024.
 //
 
 import UIKit
 
-final class MainController: SearchBarController {
-    
-    var presenter: iMainPresenter?
+final class FavoritesController: UIViewController {
+ 
+    var presenter: iFavoritesPresenter?
     
     private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let cellsInRowCount: Float = 3
+    private let cellsInRowCount: Float = 2
     private let inset: CGFloat = 16
     
     var onDetail: ((DetailInput) -> Void)?
@@ -22,10 +22,7 @@ final class MainController: SearchBarController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        title = MainString.Title.main
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
+        title = FavoritesString.Title.main
         
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -42,10 +39,6 @@ final class MainController: SearchBarController {
         view.addSubview(collectionView)
     }
     
-    private func dismissKeyboard() {
-        searchController.searchBar.endEditing(true)
-    }
-    
     func reloadView() {
         collectionView.reloadData()
     }
@@ -55,41 +48,10 @@ final class MainController: SearchBarController {
         presenter?.fetchData()
         refreshControl.endRefreshing()
     }
-
-}
-
-extension MainController: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            presenter?.clearSearch()
-        }
-    }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        presenter?.clearSearch()
-    }
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dismissKeyboard()
-    }
 }
 
-extension MainController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        let requiredCharsCount: Int = 2
-        guard let text = searchController.searchBar.searchTextField.text, text.count >= requiredCharsCount else { return }
-        presenter?.findImagesWith(text)
-    }
-}
-
-extension MainController: UIScrollViewDelegate {
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        dismissKeyboard()
-    }
-}
-
-extension MainController: UICollectionViewDataSource {
+extension FavoritesController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter?.viewModels.count ?? .zero
@@ -104,13 +66,12 @@ extension MainController: UICollectionViewDataSource {
     }
 }
 
-extension MainController: UICollectionViewDelegate {
+extension FavoritesController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let detailInput = presenter?.prepareDetailInputFor(indexPath.item) {
             onDetail?(detailInput)
         }
-        dismissKeyboard()
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -121,7 +82,7 @@ extension MainController: UICollectionViewDelegate {
     }
 }
 
-extension MainController: UICollectionViewDelegateFlowLayout {
+extension FavoritesController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize.zero }

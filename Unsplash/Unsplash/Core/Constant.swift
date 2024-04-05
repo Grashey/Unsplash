@@ -11,6 +11,7 @@ enum Constant {
     
     enum FlowTitle {
         static let main = "Photos"
+        static let favorites = "Favorites"
     }
     enum Title {
         static let searchPlaceholder = "Type to search"

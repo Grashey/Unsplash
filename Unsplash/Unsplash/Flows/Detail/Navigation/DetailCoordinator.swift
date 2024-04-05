@@ -19,6 +19,7 @@ final class DetailCoordinator: iCoordinator {
     
     func start(_ moduleInput: ModuleInput?) {
         guard let controller = assembly.build(.detail, moduleInput: moduleInput) as? DetailController else { return }
+        controller.hidesBottomBarWhenPushed = true
         navigation?.pushViewController(controller, animated: true)
     }
 }

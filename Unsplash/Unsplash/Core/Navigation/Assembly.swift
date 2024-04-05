@@ -23,6 +23,7 @@ final class Assembly: iAssembly {
         switch moduleName {
         case .main: return MainFactory.build()
         case .detail: return DetailFactory.build(input: moduleInput)
+        case .favorites: return FavoritesFactory.build()
         }
     }
 }

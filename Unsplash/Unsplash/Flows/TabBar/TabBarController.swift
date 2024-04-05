@@ -10,13 +10,15 @@ import UIKit
 final class TabBarController: UITabBarController {
 
     let mainNavigation = UINavigationController()
+    let favoritesNavigation = UINavigationController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mainNavigation.tabBarItem = UITabBarItem(title: Constant.FlowTitle.main, image: nil, selectedImage: nil)
+        favoritesNavigation.tabBarItem = UITabBarItem(title: Constant.FlowTitle.favorites, image: nil, selectedImage: nil)
 
-        viewControllers = [mainNavigation]
+        viewControllers = [mainNavigation, favoritesNavigation]
         tabBar.backgroundColor = .systemGray6
     }
 

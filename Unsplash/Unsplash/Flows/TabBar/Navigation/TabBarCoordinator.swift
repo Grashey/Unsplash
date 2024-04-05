@@ -12,6 +12,7 @@ final class TabBarCoordinator: iCoordinator {
     private var window: UIWindow?
     private var controller: TabBarController
     private lazy var mainCoordinator = MainCoordinator(navigation: controller.mainNavigation)
+    private lazy var favoritesCoordinator = FavoritesCoordinator(navigation: controller.favoritesNavigation)
 
     init(window: UIWindow?) {
         self.window = window
@@ -21,5 +22,6 @@ final class TabBarCoordinator: iCoordinator {
     func start() {
         window?.rootViewController = controller
         mainCoordinator.start()
+        favoritesCoordinator.start()
     }
 }

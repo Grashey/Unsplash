@@ -34,6 +34,12 @@
 		4A7DCE5D2BBFFCB5002E0BA0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */; };
 		4A7DCE602BC01DFB002E0BA0 /* DetailString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE5F2BC01DFB002E0BA0 /* DetailString.swift */; };
 		4A7DCE622BC02691002E0BA0 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE612BC02691002E0BA0 /* DetailViewModel.swift */; };
+		4A7DCE6A2BC04B1C002E0BA0 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE692BC04B1C002E0BA0 /* FavoritesController.swift */; };
+		4A7DCE6C2BC04B4A002E0BA0 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE6B2BC04B4A002E0BA0 /* FavoritesPresenter.swift */; };
+		4A7DCE6E2BC04B96002E0BA0 /* FavoritesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE6D2BC04B96002E0BA0 /* FavoritesFactory.swift */; };
+		4A7DCE712BC04C0B002E0BA0 /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE702BC04C0B002E0BA0 /* FavoritesCoordinator.swift */; };
+		4A7DCE742BC055B6002E0BA0 /* FavoritesString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE732BC055B6002E0BA0 /* FavoritesString.swift */; };
+		4A7DCE772BC056F6002E0BA0 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE762BC056F6002E0BA0 /* FavoritesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +72,12 @@
 		4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		4A7DCE5F2BC01DFB002E0BA0 /* DetailString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailString.swift; sourceTree = "<group>"; };
 		4A7DCE612BC02691002E0BA0 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		4A7DCE692BC04B1C002E0BA0 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		4A7DCE6B2BC04B4A002E0BA0 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
+		4A7DCE6D2BC04B96002E0BA0 /* FavoritesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesFactory.swift; sourceTree = "<group>"; };
+		4A7DCE702BC04C0B002E0BA0 /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
+		4A7DCE732BC055B6002E0BA0 /* FavoritesString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesString.swift; sourceTree = "<group>"; };
+		4A7DCE762BC056F6002E0BA0 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				4A0B0B392BBF04F700389CFB /* Main */,
+				4A7DCE682BC04AFF002E0BA0 /* Favorites */,
 				4A7DCE4F2BBFF1AB002E0BA0 /* Detail */,
 				4A0B0B312BBF00D900389CFB /* TabBar */,
 			);
@@ -258,6 +271,51 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4A7DCE682BC04AFF002E0BA0 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE722BC0550E002E0BA0 /* Navigation */,
+				4A7DCE6F2BC04BE9002E0BA0 /* Factory */,
+				4A7DCE782BC05757002E0BA0 /* Model */,
+				4A7DCE692BC04B1C002E0BA0 /* FavoritesController.swift */,
+				4A7DCE6B2BC04B4A002E0BA0 /* FavoritesPresenter.swift */,
+				4A7DCE752BC055BB002E0BA0 /* Misc */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		4A7DCE6F2BC04BE9002E0BA0 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE6D2BC04B96002E0BA0 /* FavoritesFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		4A7DCE722BC0550E002E0BA0 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE702BC04C0B002E0BA0 /* FavoritesCoordinator.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4A7DCE752BC055BB002E0BA0 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE732BC055B6002E0BA0 /* FavoritesString.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		4A7DCE782BC05757002E0BA0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A7DCE762BC056F6002E0BA0 /* FavoritesViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -328,19 +386,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A7DCE6E2BC04B96002E0BA0 /* FavoritesFactory.swift in Sources */,
 				4A0B0B302BBF007D00389CFB /* RootCoordinator.swift in Sources */,
 				4A0B0B462BBF072900389CFB /* MainFactory.swift in Sources */,
 				4A0B0B512BBF3B9500389CFB /* MainViewModel.swift in Sources */,
 				4A7DCE5A2BBFF5DF002E0BA0 /* DetailCoordinator.swift in Sources */,
 				4A0B0B4E2BBF345300389CFB /* MainPresenter.swift in Sources */,
+				4A7DCE6A2BC04B1C002E0BA0 /* FavoritesController.swift in Sources */,
 				4A0B0B4A2BBF2FE700389CFB /* SearchBarController.swift in Sources */,
 				4A7DCE552BBFF23B002E0BA0 /* DetailFactory.swift in Sources */,
 				4A7DCE602BC01DFB002E0BA0 /* DetailString.swift in Sources */,
 				4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */,
+				4A7DCE712BC04C0B002E0BA0 /* FavoritesCoordinator.swift in Sources */,
 				4A0B0B442BBF06D600389CFB /* ModuleName.swift in Sources */,
 				4A0B0B192BBEF6E400389CFB /* AppDelegate.swift in Sources */,
 				4A0B0B332BBF00F400389CFB /* TabBarCoordinator.swift in Sources */,
 				4A0B0B3B2BBF050800389CFB /* MainController.swift in Sources */,
+				4A7DCE772BC056F6002E0BA0 /* FavoritesViewModel.swift in Sources */,
 				4A7DCE622BC02691002E0BA0 /* DetailViewModel.swift in Sources */,
 				4A7DCE532BBFF1EF002E0BA0 /* DetailPresenter.swift in Sources */,
 				4A0B0B402BBF064E00389CFB /* Assembly.swift in Sources */,
@@ -350,6 +412,8 @@
 				4A7DCE5D2BBFFCB5002E0BA0 /* DetailView.swift in Sources */,
 				4A0B0B352BBF028400389CFB /* TabBarController.swift in Sources */,
 				4A0B0B372BBF030300389CFB /* Constant.swift in Sources */,
+				4A7DCE6C2BC04B4A002E0BA0 /* FavoritesPresenter.swift in Sources */,
+				4A7DCE742BC055B6002E0BA0 /* FavoritesString.swift in Sources */,
 				4A0B0B4C2BBF331900389CFB /* MainString.swift in Sources */,
 				4A7DCE512BBFF1C8002E0BA0 /* DetailController.swift in Sources */,
 				4A0B0B1B2BBEF6E400389CFB /* SceneDelegate.swift in Sources */,
