@@ -41,6 +41,7 @@ final class DetailPresenter: iDetailPresenter {
     
     func operateFavorites() {
         isFavorite.toggle()
+        NotificationCenter.default.post(name: .favoritesUpdatePending, object: nil)
     }
     
     func checkIsFavorite() -> Bool {

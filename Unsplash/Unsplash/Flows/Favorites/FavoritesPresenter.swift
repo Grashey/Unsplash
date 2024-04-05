@@ -13,6 +13,7 @@ protocol iFavoritesPresenter {
     func fetchData()
     func prepareDetailInputFor(_ index: Int) -> DetailInput
     func refresh()
+    func checkUpdateNeeded() -> Bool
 }
 
 final class FavoritesPresenter: iFavoritesPresenter {
@@ -20,6 +21,11 @@ final class FavoritesPresenter: iFavoritesPresenter {
     weak var viewController: FavoritesController?
     var viewModels: [FavoritesViewModel] = []
     private var pageNumber: Int = .zero
+    private var isUpdatePending: Bool = false
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(update), name: .favoritesUpdatePending, object: nil)
+    }
     
     func refresh() {
         pageNumber = .zero
@@ -31,6 +37,7 @@ final class FavoritesPresenter: iFavoritesPresenter {
         viewModels += page
         pageNumber += 1
         viewController?.reloadView()
+        isUpdatePending = false
     }
     
     private func makePage() -> [FavoritesViewModel] {
@@ -49,5 +56,13 @@ final class FavoritesPresenter: iFavoritesPresenter {
     func prepareDetailInputFor(_ index: Int) -> DetailInput {
         let image = viewModels[index].image
         return DetailInput(image: image)
+    }
+    
+    func checkUpdateNeeded() -> Bool {
+        isUpdatePending
+    }
+    
+    @objc private func update() {
+        isUpdatePending = true
     }
 }

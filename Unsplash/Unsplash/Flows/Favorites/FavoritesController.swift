@@ -31,6 +31,15 @@ final class FavoritesController: UIViewController {
         presenter?.fetchData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let pending = presenter?.checkUpdateNeeded(), pending {
+            presenter?.refresh()
+            presenter?.fetchData()
+        }
+    }
+    
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
