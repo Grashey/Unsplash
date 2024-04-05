@@ -9,14 +9,14 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    let searchNavigation = UINavigationController()
+    let mainNavigation = UINavigationController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchNavigation.tabBarItem = UITabBarItem(title: Constant.FlowTitle.search, image: nil, selectedImage: nil)
+        mainNavigation.tabBarItem = UITabBarItem(title: Constant.FlowTitle.main, image: nil, selectedImage: nil)
 
-        viewControllers = [searchNavigation]
+        viewControllers = [mainNavigation]
         tabBar.backgroundColor = .systemGray6
     }
 

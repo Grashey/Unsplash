@@ -10,8 +10,9 @@ import Foundation
 enum Constant {
     
     enum FlowTitle {
-        static let search = "Search"
+        static let main = "Photos"
     }
-    
-    
+    enum Title {
+        static let searchPlaceholder = "Type to search"
+    }
 }

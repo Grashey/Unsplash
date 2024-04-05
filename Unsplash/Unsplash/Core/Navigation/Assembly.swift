@@ -21,7 +21,7 @@ final class Assembly: iAssembly {
     
     func build(_ moduleName: ModuleName, moduleInput: ModuleInput?) -> UIViewController {
         switch moduleName {
-        case .search: return SearchFactory.build()
+        case .main: return MainFactory.build()
         }
     }
 }

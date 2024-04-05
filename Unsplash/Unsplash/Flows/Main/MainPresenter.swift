@@ -1,5 +1,5 @@
 //
-//  SearchPresenter.swift
+//  MainPresenter.swift
 //  Unsplash
 //
 //  Created by Aleksandr Fetisov on 04.04.2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol iSearchPresenter {
+protocol iMainPresenter {
    
-    var viewModels: [SearchViewModel] {get set}
+    var viewModels: [MainViewModel] {get set}
     
     func clearSearch()
     func findImagesWith(_ text: String)
@@ -17,11 +17,11 @@ protocol iSearchPresenter {
     func fetchData()
 }
 
-final class SearchPresenter: iSearchPresenter {
+final class MainPresenter: iMainPresenter {
     
-    weak var viewController: SearchController?
+    weak var viewController: MainController?
     
-    var viewModels: [SearchViewModel] = []
+    var viewModels: [MainViewModel] = []
     
     func clearSearch() {
         print("clear")
@@ -37,7 +37,7 @@ final class SearchPresenter: iSearchPresenter {
         for _ in .zero..<20 {
             let picIndex = Int.random(in: .zero...2)
             let image = images[picIndex]
-            let model = SearchViewModel(image: image)
+            let model = MainViewModel(image: image)
             viewModels.append(model)
         }
         

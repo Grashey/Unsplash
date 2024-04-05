@@ -11,7 +11,7 @@ class SearchBarController: UIViewController {
     
     lazy var searchController: UISearchController = {
         $0.searchBar.searchBarStyle = .prominent
-        $0.searchBar.placeholder = SearchString.Title.searchPlaceholder
+        $0.searchBar.placeholder = Constant.Title.searchPlaceholder
         $0.searchBar.sizeToFit()
         $0.obscuresBackgroundDuringPresentation = false
         return $0

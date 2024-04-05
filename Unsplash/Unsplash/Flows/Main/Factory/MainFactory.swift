@@ -1,5 +1,5 @@
 //
-//  SearchAssembly.swift
+//  MainFactory.swift
 //  Unsplash
 //
 //  Created by Aleksandr Fetisov on 04.04.2024.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-enum SearchFactory {
+enum MainFactory {
     
    static func build() -> UIViewController {
-       let controller = SearchController()
-       let presenter = SearchPresenter()
+       let controller = MainController()
+       let presenter = MainPresenter()
        controller.presenter = presenter
        presenter.viewController = controller
        return controller

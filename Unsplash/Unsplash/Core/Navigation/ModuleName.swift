@@ -8,5 +8,5 @@
 import Foundation
 
 enum ModuleName {
-    case search
+    case main
 }

@@ -1,5 +1,5 @@
 //
-//  SearchController.swift
+//  MainController.swift
 //  Unsplash
 //
 //  Created by Aleksandr Fetisov on 04.04.2024.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class SearchController: SearchBarController {
+final class MainController: SearchBarController {
     
-    var presenter: iSearchPresenter?
+    var presenter: iMainPresenter?
     
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
     private let inset: CGFloat = 16
@@ -18,6 +18,7 @@ final class SearchController: SearchBarController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        title = MainString.Title.main
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -43,7 +44,7 @@ final class SearchController: SearchBarController {
     }
 }
 
-extension SearchController: UISearchBarDelegate {
+extension MainController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
@@ -58,7 +59,7 @@ extension SearchController: UISearchBarDelegate {
     }
 }
 
-extension SearchController: UISearchResultsUpdating {
+extension MainController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         let requiredCharsCount: Int = 2
@@ -67,14 +68,14 @@ extension SearchController: UISearchResultsUpdating {
     }
 }
 
-extension SearchController: UIScrollViewDelegate {
+extension MainController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         dismissKeyboard()
     }
 }
 
-extension SearchController: UICollectionViewDataSource {
+extension MainController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter?.viewModels.count ?? .zero
@@ -89,14 +90,14 @@ extension SearchController: UICollectionViewDataSource {
     }
 }
 
-extension SearchController: UICollectionViewDelegate {
+extension MainController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         dismissKeyboard()
     }
 }
 
-extension SearchController: UICollectionViewDelegateFlowLayout {
+extension MainController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize.zero }

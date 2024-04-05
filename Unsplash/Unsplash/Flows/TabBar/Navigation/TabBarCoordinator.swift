@@ -11,7 +11,7 @@ final class TabBarCoordinator: iCoordinator {
     
     private var window: UIWindow?
     private var controller: TabBarController
-    private lazy var searchCoordinator = SearchCoordinator(navigation: controller.searchNavigation)
+    private lazy var mainCoordinator = MainCoordinator(navigation: controller.mainNavigation)
 
     init(window: UIWindow?) {
         self.window = window
@@ -20,6 +20,6 @@ final class TabBarCoordinator: iCoordinator {
 
     func start() {
         window?.rootViewController = controller
-        searchCoordinator.start()
+        mainCoordinator.start()
     }
 }
