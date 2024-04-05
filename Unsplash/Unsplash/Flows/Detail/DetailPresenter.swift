@@ -9,6 +9,8 @@ import UIKit
 
 protocol iDetailPresenter {
     func makeModel() -> UIImage?
+    func operateFavorites()
+    func checkIsFavorite() -> Bool
 }
 
 final class DetailPresenter: iDetailPresenter {
@@ -16,6 +18,12 @@ final class DetailPresenter: iDetailPresenter {
     weak var viewController: DetailController?
     
     private let image: UIImage?
+    private var isFavorite: Bool = false {
+        didSet {
+            guard oldValue != isFavorite else { return }
+            viewController?.switchFavoriteButtonImage()
+        }
+    }
     
     init(image: UIImage?) {
         self.image = image
@@ -23,5 +31,13 @@ final class DetailPresenter: iDetailPresenter {
     
     func makeModel() -> UIImage? {
         image
+    }
+    
+    func operateFavorites() {
+        isFavorite.toggle()
+    }
+    
+    func checkIsFavorite() -> Bool {
+        isFavorite
     }
 }

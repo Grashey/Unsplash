@@ -32,6 +32,7 @@
 		4A7DCE572BBFF2B4002E0BA0 /* DetailInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE562BBFF2B4002E0BA0 /* DetailInput.swift */; };
 		4A7DCE5A2BBFF5DF002E0BA0 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE592BBFF5DF002E0BA0 /* DetailCoordinator.swift */; };
 		4A7DCE5D2BBFFCB5002E0BA0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */; };
+		4A7DCE602BC01DFB002E0BA0 /* DetailString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7DCE5F2BC01DFB002E0BA0 /* DetailString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		4A7DCE562BBFF2B4002E0BA0 /* DetailInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInput.swift; sourceTree = "<group>"; };
 		4A7DCE592BBFF5DF002E0BA0 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
 		4A7DCE5C2BBFFCB5002E0BA0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		4A7DCE5F2BC01DFB002E0BA0 /* DetailString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +217,7 @@
 				4A7DCE5E2BBFFCBD002E0BA0 /* View */,
 				4A7DCE502BBFF1C8002E0BA0 /* DetailController.swift */,
 				4A7DCE522BBFF1EF002E0BA0 /* DetailPresenter.swift */,
+				4A7DCE5F2BC01DFB002E0BA0 /* DetailString.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				4A0B0B4E2BBF345300389CFB /* MainPresenter.swift in Sources */,
 				4A0B0B4A2BBF2FE700389CFB /* SearchBarController.swift in Sources */,
 				4A7DCE552BBFF23B002E0BA0 /* DetailFactory.swift in Sources */,
+				4A7DCE602BC01DFB002E0BA0 /* DetailString.swift in Sources */,
 				4A0B0B532BBF416900389CFB /* PhotoCell.swift in Sources */,
 				4A0B0B442BBF06D600389CFB /* ModuleName.swift in Sources */,
 				4A0B0B192BBEF6E400389CFB /* AppDelegate.swift in Sources */,
