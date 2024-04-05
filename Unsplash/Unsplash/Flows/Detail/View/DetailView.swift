@@ -94,14 +94,14 @@ final class DetailView: UIView {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            imageView.topAnchor.constraint(equalTo: infoStackView.bottomAnchor, constant: spacing),
             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            imageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -spacing),
             
-            infoStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: spacing),
+            infoStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: spacing),
             infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
             infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
-            infoStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -spacing)
         ])
     }
     
