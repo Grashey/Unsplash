@@ -71,7 +71,7 @@ final class DetailView: UIView {
         
         addSubviews()
         addConstraints()
-        backgroundColor = .white
+        backgroundColor = .systemBackground
     }
     
     required init?(coder: NSCoder) {

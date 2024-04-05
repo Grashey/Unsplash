@@ -12,8 +12,6 @@ final class PhotoCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.systemGray6.cgColor
         $0.layer.masksToBounds = true
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .gray
