@@ -18,14 +18,32 @@ final class DetailView: UIView {
         return $0
     }(UIImageView())
     
+    private lazy var nameLabel: UILabel = {
+        $0.text = DetailString.Title.name
+        $0.font = .systemFont(ofSize: fontSize, weight: .medium)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return $0
+    }(UILabel())
+    
+    private lazy var nameValueLabel: UILabel = {
+        $0.numberOfLines = .zero
+        $0.font = .systemFont(ofSize: fontSize, weight: .regular)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return $0
+    }(UILabel())
+    
     private lazy var authorLabel: UILabel = {
         $0.text = DetailString.Title.author
         $0.font = .systemFont(ofSize: fontSize, weight: .medium)
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
         return $0
     }(UILabel())
     
     private lazy var authorValueLabel: UILabel = {
+        $0.numberOfLines = .zero
         $0.font = .systemFont(ofSize: fontSize, weight: .regular)
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
@@ -79,9 +97,11 @@ final class DetailView: UIView {
     }
     
     private func addSubviews() {
+        titleStackView.addArrangedSubview(nameLabel)
         titleStackView.addArrangedSubview(authorLabel)
         titleStackView.addArrangedSubview(dateLabel)
         
+        valueStackView.addArrangedSubview(nameValueLabel)
         valueStackView.addArrangedSubview(authorValueLabel)
         valueStackView.addArrangedSubview(dateValueLabel)
         
@@ -101,12 +121,13 @@ final class DetailView: UIView {
             
             infoStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: spacing),
             infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
-            infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing)
         ])
     }
     
     func configureWith(model: DetailViewModel) {
         imageView.image = model.image
+        nameValueLabel.text = model.name
         authorValueLabel.text = model.author
         dateValueLabel.text = model.date
     }

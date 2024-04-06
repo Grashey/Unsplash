@@ -6,60 +6,98 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 protocol iMainPresenter {
    
     var viewModels: [MainViewModel] {get set}
+    var isLoading: Bool { get set }
     
     func clearSearch()
     func findImagesWith(_ text: String)
     func fetchData()
-    func prepareDetailInputFor(_ index: Int) -> DetailInput
+    func prepareModelFor(_ index: Int) -> PhotoDetailDataModel
     func refresh()
 }
 
 final class MainPresenter: iMainPresenter {
     
     weak var viewController: MainController?
+    private let networkService: iMainNetworkService
     var viewModels: [MainViewModel] = []
-    private var pageNumber: Int = .zero
+    private var pageNumber: Int = 1
+    private var photos: [PhotoDataModel] = []
+    private var searchText: String?
+
+    var isLoading: Bool = false
+    
+    init(networkService: iMainNetworkService) {
+        self.networkService = networkService
+    }
     
     func clearSearch() {
-        print("clear")
+        searchText = nil
+        refresh()
+        fetchData()
     }
     
     func findImagesWith(_ text: String) {
-        print("searching \(text)")
+        searchText = text
+        refresh()
+        fetchData()
     }
     
     func refresh() {
-        pageNumber = .zero
+        pageNumber = 1
+        photos.removeAll()
         viewModels.removeAll()
-    }
-    
-    func fetchData() {
-        let page = makePage()
-        viewModels += page
-        pageNumber += 1
         viewController?.reloadView()
     }
     
-    private func makePage() -> [MainViewModel] {
-        let images = [UIImage(named: "pic1"), UIImage(named: "pic2"), UIImage(named: "pic3")]
-        var array = [MainViewModel]()
-        
-        for _ in .zero..<20 {
-            let picIndex = Int.random(in: .zero...2)
-            let image = images[picIndex]
-            let model = MainViewModel(image: image)
-            array.append(model)
+    func fetchData() {
+        isLoading = true
+        Task {
+            do {
+                let json = try await makeJSON(searchText)
+                let photoModels = json.map { PhotoDataModel($0) }
+                let urlStrings = photoModels.map { $0.imageString }
+                var images: [UIImage] = Array(repeating: UIImage(), count: urlStrings.count)
+                for (index, url) in urlStrings.enumerated() {
+                    let imageData = try await networkService.loadPhoto(url: url)
+                    if let image = UIImage(data: imageData) {
+                        images[index] = image
+                    }
+                }
+                photos += photoModels
+                viewModels += images.map({ MainViewModel(image: $0)})
+                await viewController?.reloadView()
+                pageNumber += 1
+                isLoading = false
+            } catch(let error) {
+                // error presentation UI is under construction
+                print(error.localizedDescription)
+            }
         }
-        return array
     }
     
-    func prepareDetailInputFor(_ index: Int) -> DetailInput {
+    func prepareModelFor(_ index: Int) -> PhotoDetailDataModel {
         let image = viewModels[index].image
-        return DetailInput(image: image)
+        let data = photos[index]
+        let model = PhotoDetailDataModel(id: data.id, name: data.name, author: data.author, date: data.date, image: image)
+        return model
+    }
+    
+    private func makeJSON(_ text: String?) async throws -> [JSON] {
+        if let text = text {
+            let data = try await networkService.searchPhotos(value: text, page: pageNumber)
+            let dict = try JSON(data: data).dictionaryValue
+            let json = dict["results"]!.arrayValue
+            return json
+        } else {
+            let data = try await networkService.fetchPhotos(page: pageNumber)
+            let json = try JSON(data: data).arrayValue
+            return json
+        }
     }
     
 }

@@ -8,5 +8,5 @@
 import UIKit
 
 struct DetailInput: ModuleInput {
-    let image: UIImage?
+    let model: PhotoDetailDataModel
 }

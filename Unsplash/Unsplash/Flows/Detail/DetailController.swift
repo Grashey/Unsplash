@@ -26,11 +26,16 @@ final class DetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Detail"
+        title = DetailString.Title.main
         makeFavoritesButton()
         if let model = presenter?.makeModel() {
             detailView.configureWith(model: model)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.checkIsFavorite()
     }
     
     private func makeFavoritesButton() {
@@ -45,7 +50,7 @@ final class DetailController: UIViewController {
     }
 
     func switchFavoriteButtonImage() {
-        if let isFavorite = presenter?.checkIsFavorite() {
+        if let isFavorite = presenter?.getIsFavorite() {
             if isFavorite {
                 favoriteButton.setImage(UIImage(named: DetailString.Image.like), for: .normal)
             } else {

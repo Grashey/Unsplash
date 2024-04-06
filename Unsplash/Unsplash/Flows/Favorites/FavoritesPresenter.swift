@@ -6,63 +6,58 @@
 //
 
 import UIKit
+import CoreData
 
 protocol iFavoritesPresenter {
     var viewModels: [FavoritesViewModel] {get set}
     
-    func fetchData()
-    func prepareDetailInputFor(_ index: Int) -> DetailInput
-    func refresh()
-    func checkUpdateNeeded() -> Bool
+    func prepareModelFor(_ index: Int) -> PhotoDetailDataModel?
+    func getData()
+    func removeAll()
 }
 
 final class FavoritesPresenter: iFavoritesPresenter {
     
     weak var viewController: FavoritesController?
+    
     var viewModels: [FavoritesViewModel] = []
-    private var pageNumber: Int = .zero
-    private var isUpdatePending: Bool = false
+    private let dataService: DataKeeperProtocol
     
-    init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(update), name: .favoritesUpdatePending, object: nil)
+    init(dataService: DataKeeperProtocol) {
+        self.dataService = dataService
     }
-    
-    func refresh() {
-        pageNumber = .zero
-        viewModels.removeAll()
+
+    private lazy var frc: NSFetchedResultsController<CoreDataEntity> = {
+        let request = NSFetchRequest<CoreDataEntity>(entityName: "CoreDataEntity")
+        request.sortDescriptors = [.init(key: "date", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: request,
+                                             managedObjectContext: (dataService as! CoreDataStack).mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        frc.delegate = viewController
+        return frc
+    }()
+
+    func getData() {
+        try? frc.performFetch()
+        makeModels()
     }
-    
-    func fetchData() {
-        let page = makePage()
-        viewModels += page
-        pageNumber += 1
-        viewController?.reloadView()
-        isUpdatePending = false
+
+    private func makeModels() {
+        guard let objects = frc.fetchedObjects else { return }
+        let models = objects.map { FavoritesViewModel(image: UIImage(data: $0.image ?? Data()) ?? UIImage())}
+        viewModels = models
     }
-    
-    private func makePage() -> [FavoritesViewModel] {
-        let images = [UIImage(named: "pic1"), UIImage(named: "pic2"), UIImage(named: "pic3")]
-        var array = [FavoritesViewModel]()
-        
-        for _ in .zero..<20 {
-            let picIndex = Int.random(in: .zero...2)
-            let image = images[picIndex]
-            let model = FavoritesViewModel(image: image)
-            array.append(model)
-        }
-        return array
+
+    func removeAll() {
+        dataService.deleteAll()
     }
-    
-    func prepareDetailInputFor(_ index: Int) -> DetailInput {
-        let image = viewModels[index].image
-        return DetailInput(image: image)
+   
+    func prepareModelFor(_ index: Int) -> PhotoDetailDataModel? {
+        guard let objects = frc.fetchedObjects else { return nil }
+        let data = objects[index]
+        let model = PhotoDetailDataModel(id: data.id ?? "", name: data.name ?? "", author: data.author ?? "", date: data.date ?? "", image: UIImage(data: data.image ?? Data()) ?? UIImage())
+        return model
     }
-    
-    func checkUpdateNeeded() -> Bool {
-        isUpdatePending
-    }
-    
-    @objc private func update() {
-        isUpdatePending = true
-    }
+
 }

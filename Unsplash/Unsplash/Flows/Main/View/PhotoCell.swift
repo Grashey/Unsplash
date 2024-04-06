@@ -7,14 +7,13 @@
 
 import UIKit
 
-final class PhotoCell: UICollectionViewCell {
+class PhotoCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 12
         $0.layer.masksToBounds = true
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .gray
         return $0
     }(UIImageView())
     
@@ -31,6 +30,7 @@ final class PhotoCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         imageView.image = nil
+        super.prepareForReuse()
     }
     
     private func addSubviews() {

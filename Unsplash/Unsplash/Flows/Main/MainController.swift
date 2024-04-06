@@ -13,10 +13,10 @@ final class MainController: SearchBarController {
     
     private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let cellsInRowCount: Float = 3
+    private let cellsInRowCount: Float = 2
     private let inset: CGFloat = 16
     
-    var onDetail: ((DetailInput) -> Void)?
+    var onDetail: ((PhotoDetailDataModel) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,7 @@ final class MainController: SearchBarController {
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.description())
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = UIEdgeInsets(top: .zero, left: inset, bottom: .zero, right: inset)
         view.addSubview(collectionView)
@@ -107,15 +108,20 @@ extension MainController: UICollectionViewDataSource {
 extension MainController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let detailInput = presenter?.prepareDetailInputFor(indexPath.item) {
-            onDetail?(detailInput)
+        if let model = presenter?.prepareModelFor(indexPath.item) {
+            onDetail?(model)
         }
         dismissKeyboard()
     }
+}
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let count = presenter?.viewModels.count else { return }
-        if indexPath.item == count - 1 {
+extension MainController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        guard let count = presenter?.viewModels.count,
+              let isLoading = presenter?.isLoading,
+              let maxSection = indexPaths.map({ $0.row }).max() else { return }
+        if maxSection > count - 3, !isLoading {
             presenter?.fetchData()
         }
     }

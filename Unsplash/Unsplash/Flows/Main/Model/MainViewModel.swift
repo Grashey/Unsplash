@@ -7,6 +7,6 @@
 
 import UIKit
 
-struct MainViewModel {
-    var image: UIImage?
+struct MainViewModel: Hashable {
+    var image: UIImage
 }

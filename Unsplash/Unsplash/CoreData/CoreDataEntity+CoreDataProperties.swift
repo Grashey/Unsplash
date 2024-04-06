@@ -1,12 +1,14 @@
 //
 //  CoreDataEntity+CoreDataProperties.swift
-//  Unsplash
+//  
 //
-//  Created by Aleksandr Fetisov on 05.04.2024.
+//  Created by Aleksandr Fetisov on 06.04.2024.
+//
 //
 
 import Foundation
 import CoreData
+
 
 extension CoreDataEntity {
 
@@ -14,11 +16,10 @@ extension CoreDataEntity {
         return NSFetchRequest<CoreDataEntity>(entityName: "CoreDataEntity")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var name: String?
     @NSManaged public var author: String?
     @NSManaged public var date: Date?
+    @NSManaged public var id: String?
     @NSManaged public var image: Data?
-}
+    @NSManaged public var name: String?
 
-extension CoreDataEntity: Identifiable {}
+}

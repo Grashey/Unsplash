@@ -11,7 +11,8 @@ enum FavoritesFactory {
     
     static func build() -> UIViewController {
         let controller = FavoritesController()
-        let presenter = FavoritesPresenter()
+        let dataService: DataKeeperProtocol = Container.shared.coreDataStack
+        let presenter = FavoritesPresenter(dataService: dataService)
         controller.presenter = presenter
         presenter.viewController = controller
         return controller

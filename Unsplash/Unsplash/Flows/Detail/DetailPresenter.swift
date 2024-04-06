@@ -10,14 +10,17 @@ import UIKit
 protocol iDetailPresenter {
     func makeModel() -> DetailViewModel
     func operateFavorites()
-    func checkIsFavorite() -> Bool
+    func checkIsFavorite()
+    func getIsFavorite() -> Bool
 }
 
 final class DetailPresenter: iDetailPresenter {
     
     weak var viewController: DetailController?
     
+    private let dataService: DataKeeperProtocol
     private let model: DetailViewModel
+    private var dataModel: PhotoDetailDataModel
     private var isFavorite: Bool = false {
         didSet {
             guard oldValue != isFavorite else { return }
@@ -25,14 +28,10 @@ final class DetailPresenter: iDetailPresenter {
         }
     }
     
-    private let formatter: DateFormatter = {
-        $0.dateFormat = "dd.MM.yyyy"
-        return $0
-    }(DateFormatter())
-    
-    init(image: UIImage?) {
-        let date = Date()
-        self.model = DetailViewModel(image: image, author: "Vincent van Gogh", date: formatter.string(from: date))
+    init(model: PhotoDetailDataModel, dataService: DataKeeperProtocol) {
+        self.dataService = dataService
+        dataModel = model
+        self.model = DetailViewModel(image: dataModel.image, name: dataModel.name, author: dataModel.author, date: dataModel.date)
     }
     
     func makeModel() -> DetailViewModel {
@@ -40,11 +39,22 @@ final class DetailPresenter: iDetailPresenter {
     }
     
     func operateFavorites() {
-        isFavorite.toggle()
-        NotificationCenter.default.post(name: .favoritesUpdatePending, object: nil)
+        if !isFavorite {
+            guard let imageData = dataModel.image.pngData() else { return }
+            dataService.addEntity(id: dataModel.id, name: dataModel.name, author: dataModel.author, date: dataModel.date, imageData: imageData)
+            isFavorite = true
+        } else {
+            dataService.delete(id: dataModel.id)
+            isFavorite = false
+        }
     }
     
-    func checkIsFavorite() -> Bool {
+    func checkIsFavorite() {
+        isFavorite = dataService.check(id: dataModel.id)
+    }
+    
+    func getIsFavorite() -> Bool {
         isFavorite
     }
+    
 }

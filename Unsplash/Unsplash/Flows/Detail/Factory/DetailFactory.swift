@@ -15,7 +15,8 @@ enum DetailFactory {
             return UIViewController()
         }
         let controller = DetailController()
-        let presenter = DetailPresenter(image: input.image)
+        let dataService: DataKeeperProtocol = Container.shared.coreDataStack
+        let presenter = DetailPresenter(model: input.model, dataService: dataService)
         controller.presenter = presenter
         presenter.viewController = controller
         return controller

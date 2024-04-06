@@ -10,8 +10,10 @@ import Foundation
 enum DetailString {
     
     enum Title {
+        static let name = "name:"
         static let author = "author:"
         static let date = "date:"
+        static let main = "Detail"
     }
     
     enum Image {

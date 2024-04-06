@@ -23,7 +23,8 @@ final class FavoritesCoordinator: iCoordinator {
         guard let controller = assembly.build(.favorites) as? FavoritesController else { return }
         navigation?.viewControllers = [controller]
         
-        controller.onDetail = { [unowned self] input in
+        controller.onDetail = { [unowned self] model in
+            let input = DetailInput(model: model)
             self.detailCoordinator.start(input)
         }
     }

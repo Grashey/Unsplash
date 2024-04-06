@@ -6,17 +6,17 @@
 //
 
 import UIKit
+import CoreData
 
 final class FavoritesController: UIViewController {
  
     var presenter: iFavoritesPresenter?
     
-    private let refreshControl = UIRefreshControl()
     private lazy var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout.init())
-    private let cellsInRowCount: Float = 2
+    private let cellsInRowCount: Float = 3
     private let inset: CGFloat = 16
     
-    var onDetail: ((DetailInput) -> Void)?
+    var onDetail: ((PhotoDetailDataModel) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,20 +24,15 @@ final class FavoritesController: UIViewController {
         view.backgroundColor = .systemBackground
         title = FavoritesString.Title.main
         
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
         setupCollectionView()
-        presenter?.fetchData()
+        presenter?.getData()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove All", style: .plain, target: self, action: #selector(removeAll))
+        switchButton()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let pending = presenter?.checkUpdateNeeded(), pending {
-            presenter?.refresh()
-            presenter?.fetchData()
-        }
+    @objc private func removeAll() {
+        presenter?.removeAll()
     }
     
     private func setupCollectionView() {
@@ -48,14 +43,13 @@ final class FavoritesController: UIViewController {
         view.addSubview(collectionView)
     }
     
-    func reloadView() {
-        collectionView.reloadData()
-    }
-    
-    @objc private func refresh() {
-        presenter?.refresh()
-        presenter?.fetchData()
-        refreshControl.endRefreshing()
+    private func switchButton() {
+        guard let isEmpty = presenter?.viewModels.isEmpty else { return }
+        if isEmpty {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
     
 }
@@ -78,17 +72,11 @@ extension FavoritesController: UICollectionViewDataSource {
 extension FavoritesController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let detailInput = presenter?.prepareDetailInputFor(indexPath.item) {
-            onDetail?(detailInput)
+        if let model = presenter?.prepareModelFor(indexPath.item) {
+            onDetail?(model)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let count = presenter?.viewModels.count else { return }
-        if indexPath.item == count - 1 {
-            presenter?.fetchData()
-        }
-    }
 }
 
 extension FavoritesController: UICollectionViewDelegateFlowLayout {
@@ -99,5 +87,14 @@ extension FavoritesController: UICollectionViewDelegateFlowLayout {
         let cellWidth = CGFloat(roundf(Float((collectionView.visibleSize.width - overalLineSpacing - inset*2))/cellsInRowCount))
         let cellSize = CGSize(width: cellWidth, height: cellWidth)
         return cellSize
+    }
+}
+
+extension FavoritesController: NSFetchedResultsControllerDelegate {
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        presenter?.getData()
+        switchButton()
+        collectionView.reloadData()
     }
 }

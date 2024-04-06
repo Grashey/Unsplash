@@ -8,5 +8,5 @@
 import UIKit
 
 struct FavoritesViewModel {
-    var image: UIImage?
+    var image: UIImage
 }

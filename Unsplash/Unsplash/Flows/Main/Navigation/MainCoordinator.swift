@@ -23,7 +23,8 @@ final class MainCoordinator: iCoordinator {
         guard let controller = assembly.build(.main) as? MainController else { return }
         navigation?.viewControllers = [controller]
         
-        controller.onDetail = { [unowned self] input in
+        controller.onDetail = { [unowned self] model in
+            let input = DetailInput(model: model)
             self.detailCoordinator.start(input)
         }
     }

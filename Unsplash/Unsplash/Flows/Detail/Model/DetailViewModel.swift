@@ -9,6 +9,7 @@ import UIKit
 
 struct DetailViewModel {
     let image: UIImage?
+    let name: String
     let author: String
     let date: String
 }

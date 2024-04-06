@@ -56,7 +56,8 @@ class CoreDataStack: DataKeeperProtocol {
                 favorites = result
             }
         }
-        return !favorites.isEmpty ? true : false
+        let entityExists = !favorites.isEmpty
+        return entityExists
     }
 
     func deleteAll() {
@@ -79,7 +80,7 @@ class CoreDataStack: DataKeeperProtocol {
             try? backgroundContext.save()
         }
     }
-    func addEntity(id: String, name: String, author: String, date: Date, imageData: Data) {
+    func addEntity(id: String, name: String, author: String, date: String, imageData: Data) {
         mainContext.performAndWait {
             let entity = CoreDataEntity(context: mainContext)
             entity.id = id

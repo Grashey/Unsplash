@@ -11,5 +11,5 @@ protocol DataKeeperProtocol {
     func check(id: String) -> Bool
     func deleteAll()
     func delete(id: String)
-    func addEntity(id: String, name: String, author: String, date: Date, imageData: Data)
+    func addEntity(id: String, name: String, author: String, date: String, imageData: Data)
 }
