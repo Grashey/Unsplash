@@ -70,11 +70,11 @@ final class MainPresenter: iMainPresenter {
                 }
                 let photoModels = json.map { PhotoDataModel($0) }
                 let urlStrings = photoModels.map { $0.imageString }
-                var images: [UIImage] = Array(repeating: UIImage(), count: urlStrings.count)
-                for (index, url) in urlStrings.enumerated() {
+                var images: [UIImage] = []
+                for url in urlStrings {
                     let imageData = try await networkService.loadPhoto(url: url)
                     if let image = UIImage(data: imageData) {
-                        images[index] = image
+                        images.append(image)
                     }
                 }
                 photos += photoModels
@@ -84,6 +84,7 @@ final class MainPresenter: iMainPresenter {
                 isLoading = false
             } catch(let error) {
                 await viewController?.showMessage(error.localizedDescription)
+                isLoading = false
             }
         }
     }

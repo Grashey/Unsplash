@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct PhotoDataModel: Hashable {
+struct PhotoDataModel {
     
     var id: String
     var name: String

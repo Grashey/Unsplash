@@ -29,8 +29,8 @@ class PhotoCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        imageView.image = nil
         super.prepareForReuse()
+        imageView.image = nil
     }
     
     private func addSubviews() {

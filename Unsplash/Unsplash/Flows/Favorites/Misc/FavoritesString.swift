@@ -11,5 +11,6 @@ enum FavoritesString {
     
     enum Title {
         static let main = "Favorites"
+        static let remove = "Remove All"
     }
 }

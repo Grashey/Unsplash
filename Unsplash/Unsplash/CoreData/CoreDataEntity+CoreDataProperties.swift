@@ -17,7 +17,7 @@ extension CoreDataEntity {
     }
 
     @NSManaged public var author: String?
-    @NSManaged public var date: Date?
+    @NSManaged public var date: String?
     @NSManaged public var id: String?
     @NSManaged public var image: Data?
     @NSManaged public var name: String?

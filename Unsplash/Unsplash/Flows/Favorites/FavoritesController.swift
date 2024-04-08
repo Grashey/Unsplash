@@ -27,7 +27,7 @@ final class FavoritesController: UIViewController {
         setupCollectionView()
         presenter?.getData()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Remove All", style: .plain, target: self, action: #selector(removeAll))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: FavoritesString.Title.remove, style: .plain, target: self, action: #selector(removeAll))
         switchButton()
     }
     
@@ -45,11 +45,7 @@ final class FavoritesController: UIViewController {
     
     private func switchButton() {
         guard let isEmpty = presenter?.viewModels.isEmpty else { return }
-        if isEmpty {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = true
-        }
+        navigationItem.rightBarButtonItem?.isEnabled = !isEmpty
     }
     
 }

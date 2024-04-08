@@ -86,9 +86,7 @@ final class MainController: SearchBarController {
     
     func showMessage(_ message: String) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            self.searchController.searchBar.resignFirstResponder()
-        })
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true, completion: nil)
     }
 
