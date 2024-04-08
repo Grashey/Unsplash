@@ -30,7 +30,6 @@ final class DetailView: UIView {
         $0.numberOfLines = .zero
         $0.font = .systemFont(ofSize: fontSize, weight: .regular)
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
         return $0
     }(UILabel())
     
@@ -53,6 +52,7 @@ final class DetailView: UIView {
         $0.text = DetailString.Title.date
         $0.font = .systemFont(ofSize: fontSize, weight: .medium)
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setContentHuggingPriority(.required, for: .horizontal)
         return $0
     }(UILabel())
     
@@ -62,24 +62,33 @@ final class DetailView: UIView {
         return $0
     }(UILabel())
     
-    private lazy var titleStackView: UIStackView = {
-        $0.axis = .vertical
+    private lazy var nameStackView: UIStackView = {
+        $0.axis = .horizontal
         $0.spacing = spacing
+        $0.alignment = .top
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIStackView())
     
-    private lazy var valueStackView: UIStackView = {
-        $0.axis = .vertical
+    private lazy var authorStackView: UIStackView = {
+        $0.axis = .horizontal
         $0.spacing = spacing
-        $0.alignment = .leading
+        $0.alignment = .top
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UIStackView())
+    
+    private lazy var dateStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.spacing = spacing
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIStackView())
     
     private lazy var infoStackView: UIStackView = {
-        $0.axis = .horizontal
+        $0.axis = .vertical
         $0.spacing = spacing
+        $0.distribution = .fillProportionally
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UIStackView())
@@ -97,16 +106,18 @@ final class DetailView: UIView {
     }
     
     private func addSubviews() {
-        titleStackView.addArrangedSubview(nameLabel)
-        titleStackView.addArrangedSubview(authorLabel)
-        titleStackView.addArrangedSubview(dateLabel)
+        nameStackView.addArrangedSubview(nameLabel)
+        nameStackView.addArrangedSubview(nameValueLabel)
         
-        valueStackView.addArrangedSubview(nameValueLabel)
-        valueStackView.addArrangedSubview(authorValueLabel)
-        valueStackView.addArrangedSubview(dateValueLabel)
+        authorStackView.addArrangedSubview(authorLabel)
+        authorStackView.addArrangedSubview(authorValueLabel)
         
-        infoStackView.addArrangedSubview(titleStackView)
-        infoStackView.addArrangedSubview(valueStackView)
+        dateStackView.addArrangedSubview(dateLabel)
+        dateStackView.addArrangedSubview(dateValueLabel)
+        
+        infoStackView.addArrangedSubview(nameStackView)
+        infoStackView.addArrangedSubview(authorStackView)
+        infoStackView.addArrangedSubview(dateStackView)
         
         self.addSubview(imageView)
         self.addSubview(infoStackView)
