@@ -18,6 +18,14 @@ final class MainController: SearchBarController {
     
     var onDetail: ((PhotoDetailDataModel) -> Void)?
     
+    private let spinner = SpinnerController()
+    var isLoading = false {
+        didSet {
+            guard oldValue != isLoading else { return }
+            showSpinner(isShown: isLoading)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +40,11 @@ final class MainController: SearchBarController {
         
         setupCollectionView()
         presenter?.fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        spinner.view.frame = view.frame
     }
     
     private func setupCollectionView() {
@@ -55,6 +68,28 @@ final class MainController: SearchBarController {
         presenter?.refresh()
         presenter?.fetchData()
         refreshControl.endRefreshing()
+    }
+    
+    private func showSpinner(isShown: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            if isShown {
+                addChild(spinner)
+                view.addSubview(spinner.view)
+                spinner.didMove(toParent: self)
+            } else {
+                spinner.willMove(toParent: nil)
+                spinner.view.removeFromSuperview()
+                spinner.removeFromParent()
+            }
+        }
+    }
+    
+    func showMessage(_ message: String) {
+        let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            self.searchController.searchBar.resignFirstResponder()
+        })
+        present(alert, animated: true, completion: nil)
     }
 
 }

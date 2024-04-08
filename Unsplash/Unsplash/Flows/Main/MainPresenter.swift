@@ -29,7 +29,11 @@ final class MainPresenter: iMainPresenter {
     private var photos: [PhotoDataModel] = []
     private var searchText: String?
 
-    var isLoading: Bool = false
+    var isLoading: Bool = false {
+        didSet {
+            viewController?.isLoading = isLoading
+        }
+    }
     
     init(networkService: iMainNetworkService) {
         self.networkService = networkService
@@ -42,9 +46,11 @@ final class MainPresenter: iMainPresenter {
     }
     
     func findImagesWith(_ text: String) {
-        searchText = text
-        refresh()
-        fetchData()
+        if searchText != text {
+            searchText = text
+            refresh()
+            fetchData()
+        }
     }
     
     func refresh() {
@@ -59,6 +65,9 @@ final class MainPresenter: iMainPresenter {
         Task {
             do {
                 let json = try await makeJSON(searchText)
+                if json.isEmpty {
+                    await viewController?.showMessage("no results")
+                }
                 let photoModels = json.map { PhotoDataModel($0) }
                 let urlStrings = photoModels.map { $0.imageString }
                 var images: [UIImage] = Array(repeating: UIImage(), count: urlStrings.count)
@@ -74,8 +83,7 @@ final class MainPresenter: iMainPresenter {
                 pageNumber += 1
                 isLoading = false
             } catch(let error) {
-                // error presentation UI is under construction
-                print(error.localizedDescription)
+                await viewController?.showMessage(error.localizedDescription)
             }
         }
     }
