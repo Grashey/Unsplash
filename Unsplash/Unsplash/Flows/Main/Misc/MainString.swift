@@ -11,5 +11,6 @@ enum MainString {
     
     enum Title {
         static let main = "Photos"
+        static let noResults = "no results"
     }
 }

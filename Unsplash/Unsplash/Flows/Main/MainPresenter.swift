@@ -65,9 +65,6 @@ final class MainPresenter: iMainPresenter {
         Task {
             do {
                 let json = try await makeJSON(searchText)
-                if json.isEmpty {
-                    await viewController?.showMessage("no results")
-                }
                 let photoModels = json.map { PhotoDataModel($0) }
                 let urlStrings = photoModels.map { $0.imageString }
                 var images: [UIImage] = []
@@ -79,11 +76,12 @@ final class MainPresenter: iMainPresenter {
                 }
                 photos += photoModels
                 viewModels += images.map({ MainViewModel(image: $0)})
+                await viewController?.showEmptyMessage(isEmpty: photos.isEmpty)
                 await viewController?.reloadView()
                 pageNumber += 1
                 isLoading = false
             } catch(let error) {
-                await viewController?.showMessage(error.localizedDescription)
+                await viewController?.showAlert(error.localizedDescription)
                 isLoading = false
             }
         }

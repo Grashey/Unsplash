@@ -22,7 +22,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="N1K-yV-Mom">
-                                <rect key="frame" x="20" y="249.66666666666663" width="353" height="353"/>
+                                <rect key="frame" x="100" y="329.66666666666669" width="193" height="193.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="N1K-yV-Mom" secondAttribute="height" multiplier="1:1" id="VjM-YY-Veu"/>
                                 </constraints>
@@ -33,12 +33,12 @@
                         <constraints>
                             <constraint firstItem="xhE-F3-5pI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2Tr-Km-sen"/>
                             <constraint firstItem="xhE-F3-5pI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="7Nq-gJ-tli"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N1K-yV-Mom" secondAttribute="trailing" constant="20" id="KVC-IJ-Zgq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N1K-yV-Mom" secondAttribute="trailing" constant="100" id="KVC-IJ-Zgq"/>
                             <constraint firstItem="N1K-yV-Mom" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QBe-mN-KN6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xhE-F3-5pI" secondAttribute="trailing" id="bcM-l5-Xex"/>
                             <constraint firstAttribute="bottom" secondItem="xhE-F3-5pI" secondAttribute="bottom" id="epj-RP-2RT"/>
                             <constraint firstItem="N1K-yV-Mom" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="kGT-Ey-m8K"/>
-                            <constraint firstItem="N1K-yV-Mom" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wzh-tB-Rzu"/>
+                            <constraint firstItem="N1K-yV-Mom" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="wzh-tB-Rzu"/>
                         </constraints>
                     </view>
                 </viewController>

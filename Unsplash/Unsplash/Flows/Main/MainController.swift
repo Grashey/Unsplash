@@ -26,6 +26,12 @@ final class MainController: SearchBarController {
         }
     }
     
+    private lazy var infoLabel: UILabel = {
+        $0.text = MainString.Title.noResults
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UILabel())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +44,7 @@ final class MainController: SearchBarController {
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
-        setupCollectionView()
+        addSubviews()
         presenter?.fetchData()
     }
     
@@ -47,13 +53,25 @@ final class MainController: SearchBarController {
         spinner.view.frame = view.frame
     }
     
+    private func addSubviews() {
+        setupCollectionView()
+        setupLabel()
+    }
+    
     private func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.prefetchDataSource = self
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.description())
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset = UIEdgeInsets(top: .zero, left: inset, bottom: .zero, right: inset)
         view.addSubview(collectionView)
+    }
+    
+    private func setupLabel() {
+        view.addSubview(infoLabel)
+        NSLayoutConstraint.activate([
+            infoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            infoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -view.frame.size.height/4)
+        ])
     }
     
     private func dismissKeyboard() {
@@ -84,7 +102,11 @@ final class MainController: SearchBarController {
         }
     }
     
-    func showMessage(_ message: String) {
+    func showEmptyMessage(isEmpty: Bool) {
+        infoLabel.isHidden = !isEmpty
+    }
+    
+    func showAlert(_ message: String) {
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true, completion: nil)
@@ -99,9 +121,11 @@ extension MainController: UISearchBarDelegate {
             presenter?.clearSearch()
         }
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         presenter?.clearSearch()
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dismissKeyboard()
     }
@@ -146,15 +170,11 @@ extension MainController: UICollectionViewDelegate {
         }
         dismissKeyboard()
     }
-}
     
-extension MainController: UICollectionViewDataSourcePrefetching {
-    
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let count = presenter?.viewModels.count,
-              let isLoading = presenter?.isLoading,
-              let maxSection = indexPaths.map({ $0.row }).max() else { return }
-        if maxSection > count - 3, !isLoading {
+              let isLoading = presenter?.isLoading else { return }
+        if indexPath.item > count - 2, !isLoading {
             presenter?.fetchData()
         }
     }
