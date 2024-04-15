@@ -26,6 +26,7 @@ final class MainPresenter: iMainPresenter {
     private let networkService: iMainNetworkService
     var viewModels: [MainViewModel] = []
     private var pageNumber: Int = 1
+    private var totalPages: Int?
     private var photos: [PhotoDataModel] = []
     private var searchText: String?
 
@@ -55,13 +56,18 @@ final class MainPresenter: iMainPresenter {
     
     func refresh() {
         pageNumber = 1
+        totalPages = nil
         photos.removeAll()
         viewModels.removeAll()
         viewController?.reloadView()
     }
     
     func fetchData() {
+        if let totalPages = totalPages {
+            guard totalPages >= pageNumber else { return }
+        }
         isLoading = true
+        
         Task {
             do {
                 let json = try await makeJSON(searchText)
@@ -99,6 +105,7 @@ final class MainPresenter: iMainPresenter {
             let data = try await networkService.searchPhotos(value: text, page: pageNumber)
             let dict = try JSON(data: data).dictionaryValue
             let json = dict["results"]!.arrayValue
+            totalPages = dict["total_pages"]?.intValue
             return json
         } else {
             let data = try await networkService.fetchPhotos(page: pageNumber)
