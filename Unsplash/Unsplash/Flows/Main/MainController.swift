@@ -28,6 +28,7 @@ final class MainController: SearchBarController {
     
     private lazy var infoLabel: UILabel = {
         $0.text = MainString.Title.noResults
+        $0.isHidden = true
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
