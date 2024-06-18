@@ -73,19 +73,24 @@ final class MainPresenter: iMainPresenter {
                 let json = try await makeJSON(searchText)
                 let photoModels = json.map { PhotoDataModel($0) }
                 let urlStrings = photoModels.map { $0.imageString }
-                var images: [UIImage] = []
-                for url in urlStrings {
-                    let imageData = try await networkService.loadPhoto(url: url)
-                    if let image = UIImage(data: imageData) {
-                        images.append(image)
-                    }
-                }
+                let images: [UIImage] = Array(repeating: UIImage(), count: urlStrings.count)
                 photos += photoModels
                 viewModels += images.map({ MainViewModel(image: $0)})
                 await viewController?.showEmptyMessage(isEmpty: photos.isEmpty)
                 await viewController?.reloadView()
                 pageNumber += 1
                 isLoading = false
+                
+                for (index,url) in urlStrings.enumerated() {
+                    let imageData = try await networkService.loadPhoto(url: url)
+                    let photoIndex = photos.isEmpty ? index : photos.count - urlStrings.count + index
+                    guard viewModels.count >= photoIndex else { return }
+                    if let image = UIImage(data: imageData) {
+                        viewModels[photoIndex] = MainViewModel(image: image)
+                        await viewController?.reloadCellAt(index: photoIndex)
+                    }
+                }
+                
             } catch(let error) {
                 await viewController?.showAlert(error.localizedDescription)
                 isLoading = false

@@ -83,6 +83,10 @@ final class MainController: SearchBarController {
         collectionView.reloadData()
     }
     
+    func reloadCellAt(index: Int) {
+        collectionView.reloadItems(at: [IndexPath(item: index, section: .zero)])
+    }
+    
     @objc private func refresh() {
         presenter?.refresh()
         presenter?.fetchData()
@@ -137,7 +141,10 @@ extension MainController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let requiredCharsCount: Int = 2
         guard let text = searchController.searchBar.searchTextField.text, text.count >= requiredCharsCount else { return }
-        presenter?.findImagesWith(text)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [unowned self] in
+            guard text == searchController.searchBar.searchTextField.text else { return }
+            self.presenter?.findImagesWith(text)
+        }
     }
 }
 
