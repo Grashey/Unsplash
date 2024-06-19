@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftyJSON
+import CoreData
 
 protocol iMainPresenter {
    
@@ -24,6 +25,7 @@ final class MainPresenter: iMainPresenter {
     
     weak var viewController: MainController?
     private let networkService: iMainNetworkService
+    private let dataService: DataKeeperProtocol
     var viewModels: [MainViewModel] = []
     private var pageNumber: Int = 1
     private var totalPages: Int?
@@ -36,8 +38,19 @@ final class MainPresenter: iMainPresenter {
         }
     }
     
-    init(networkService: iMainNetworkService) {
+    private lazy var frc: NSFetchedResultsController<CoreDataEntity> = {
+        let request = NSFetchRequest<CoreDataEntity>(entityName: "CoreDataEntity")
+        let frc = NSFetchedResultsController(fetchRequest: request,
+                                             managedObjectContext: (dataService as! CoreDataStack).mainContext,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        return frc
+    }()
+    
+    init(networkService: iMainNetworkService, dataService: DataKeeperProtocol) {
         self.networkService = networkService
+        self.dataService = dataService
+        try? frc.performFetch()
     }
     
     func clearSearch() {
@@ -72,8 +85,7 @@ final class MainPresenter: iMainPresenter {
             do {
                 let json = try await makeJSON(searchText)
                 let photoModels = json.map { PhotoDataModel($0) }
-                let urlStrings = photoModels.map { $0.imageString }
-                let images: [UIImage] = Array(repeating: UIImage(), count: urlStrings.count)
+                let images: [UIImage] = Array(repeating: UIImage(), count: photoModels.count)
                 photos += photoModels
                 viewModels += images.map({ MainViewModel(image: $0)})
                 await viewController?.showEmptyMessage(isEmpty: photos.isEmpty)
@@ -81,9 +93,10 @@ final class MainPresenter: iMainPresenter {
                 pageNumber += 1
                 isLoading = false
                 
-                for (index,url) in urlStrings.enumerated() {
-                    let imageData = try await networkService.loadPhoto(url: url)
-                    let photoIndex = photos.isEmpty ? index : photos.count - urlStrings.count + index
+                for (index,model) in photoModels.enumerated() {
+                    let cachedData = checkPhoto(id: model.id)
+                    let imageData = cachedData != nil ? cachedData! : try await loadAndCachePhoto(model: model)
+                    let photoIndex = photos.isEmpty ? index : photos.count - photoModels.count + index
                     guard viewModels.count >= photoIndex else { return }
                     if let image = UIImage(data: imageData) {
                         viewModels[photoIndex] = MainViewModel(image: image)
@@ -117,6 +130,16 @@ final class MainPresenter: iMainPresenter {
             let json = try JSON(data: data).arrayValue
             return json
         }
+    }
+    
+    private func checkPhoto(id: String) -> Data? {
+        return dataService.check(id: id) ? frc.fetchedObjects?.filter({$0.id == id}).first?.image : nil
+    }
+    
+    private func loadAndCachePhoto(model: PhotoDataModel) async throws -> Data {
+        let imageData = try await networkService.loadPhoto(url: model.imageString)
+        dataService.addEntity(id: model.id, name: model.name, author: model.author, date: model.date, imageData: imageData)
+        return imageData
     }
     
 }

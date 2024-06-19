@@ -7,9 +7,16 @@
 
 import Foundation
 
+enum CoreDataModelName: String {
+    case favorites = "Favorites"
+    case cache = "Cache"
+}
+
 class Container {
+    
     static let shared = Container()
     private init() {}
 
-    lazy var coreDataStack = CoreDataStack(modelName: "CoreDataModel")
+    lazy var favorites = CoreDataStack(modelName: CoreDataModelName.favorites)
+    lazy var cache = CoreDataStack(modelName: CoreDataModelName.cache)
 }

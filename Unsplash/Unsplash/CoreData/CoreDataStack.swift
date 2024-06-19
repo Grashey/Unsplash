@@ -17,12 +17,12 @@ class CoreDataStack: DataKeeperProtocol {
     var coordinator: NSPersistentStoreCoordinator { container.persistentStoreCoordinator }
     let fetchRequest = NSFetchRequest<CoreDataEntity>(entityName: "CoreDataEntity")
 
-    init(modelName: String) {
-        let container = NSPersistentContainer(name: modelName)
+    init(modelName: CoreDataModelName) {
+        let container = NSPersistentContainer(name: "CoreDataModel")
         self.container = container
 
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
-        let url = URL(fileURLWithPath: documentsPath).appendingPathComponent("CoreDataEntity.sqlite")
+        let url = URL(fileURLWithPath: documentsPath).appendingPathComponent("\(modelName.rawValue).sqlite")
 
         do {
             try container.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType,
@@ -31,7 +31,7 @@ class CoreDataStack: DataKeeperProtocol {
                                               options: [NSMigratePersistentStoresAutomaticallyOption: true,
                                                         NSInferMappingModelAutomaticallyOption: true])
         } catch {
-            print(error)
+            print(error.localizedDescription)
             fatalError()
         }
 

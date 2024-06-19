@@ -12,7 +12,8 @@ enum MainFactory {
    static func build() -> UIViewController {
        let controller = MainController()
        let networkService = MainNetworkService()
-       let presenter = MainPresenter(networkService: networkService)
+       let dataService: DataKeeperProtocol = Container.shared.cache
+       let presenter = MainPresenter(networkService: networkService, dataService: dataService)
        controller.presenter = presenter
        presenter.viewController = controller
        return controller
